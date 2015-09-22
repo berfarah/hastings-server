@@ -1,0 +1,15 @@
+h1.page-header
+  ' Logs
+  = of_instance
+
+table.table
+  thead: tr
+    th Time
+    th Severity
+    th Message
+  tbody
+    - @logs.each do |log|
+      tr class=severity_class(log.severity)
+        td = time_default log.created_at
+        td = log.severity.upcase
+        td = log.message

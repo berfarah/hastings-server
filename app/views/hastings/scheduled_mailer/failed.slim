@@ -1,0 +1,16 @@
+html
+  head: meta content='text/html; charset=UTF-8' http-equiv='Content-Type'
+  body
+    h3 There have been #{@failed.length} failures in the last hour:
+
+    table
+      thead: tr
+        th Task
+        th Instance
+        th Last log
+      tbody
+        - @failed.each do |failure|
+          tr
+            td = link_to failure.task.name, failure.task
+            td = link_to failure.id, failure
+            td = failure.logs.last.message

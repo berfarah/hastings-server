@@ -1,0 +1,92 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+ *= require_self
+ */
+@import "bootstrap-sprockets";
+@import "paper/variables";
+@import "bootstrap";
+@import "paper/bootswatch";
+
+ @mixin animation($time: 0.2s) {
+   opacity: 0;
+   max-height: 0;
+   margin-bottom: 0;
+   overflow: hidden;
+   @include transition(max-height ease $time, opacity ease $time, margin-bottom ease $time);
+ }
+
+ @mixin animate_to($height: 120px) {
+   max-height: $height;
+   opacity: 1;
+   margin-bottom: inherit;
+ }
+
+ [data-conditional] {
+   @include animation;
+ }
+
+.form-control {
+  &.form-date { width: 150px; }
+  &.form-time { width: 110px; }
+  &.form-name { width: 236px; }
+  &.form-ip { width: 235px; }
+}
+
+ .file-label {
+   font-weight: normal;
+
+   &:before {
+     @extend .btn;
+     @extend .btn-default;
+     content: 'Upload';
+     display: inline-block;
+     border-radius: 4px 0 0 4px;
+     vertical-align: middle;
+     position: relative;
+   }
+
+   .form-control {
+     color: $gray-light;
+     background: transparent;
+     text-indent: -9999px;
+     display: inline-block;
+     margin-left: -70px;
+     width: 235px;
+     padding: 8px 0;
+   }
+ }
+
+ .form-control.form-number {
+   width: 50px;
+ }
+
+ .visible {
+   @include animate_to;
+ }
+
+ .btn-inline {
+   margin-top: -8px;
+ }
+
+ table .btn-inline {
+   margin-top: inherit;
+ }
+
+ .btn-delete {
+   @extend .text-danger;
+ }
+
+ .table-borderless td {
+   border: 0 !important;
+ }

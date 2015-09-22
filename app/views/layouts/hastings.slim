@@ -1,0 +1,20 @@
+html
+  title Hastings
+  = stylesheet_link_tag 'hastings/app', media: 'all', 'data-turbolinks-track' => true
+  = javascript_include_tag 'hastings/app', 'data-turbolinks-track' => true
+  = csrf_meta_tags
+
+  nav.navbar.navbar-inverse.navbar-static-top:.container
+    .navbar-header = link_to 'Hastings', tasks_path, class: 'navbar-brand'
+    div
+      = search
+      / form.navbar-form.navbar-left role="search" action=search_url
+      /   .form-group: input type="text" class="form-control" placeholder="Search" size="50" name="search_query" value=params[:search_query]
+      ul.nav.navbar-nav.navbar-right
+        = nav_link_to 'Tasks', tasks_path, ['hastings/tasks', 'hastings/instances']
+        / li = nav_link_to 'Emails', emails_path, 'emails'
+        = nav_link_to 'Logs', logs_path, 'hastings/logs'
+
+  .container
+    = flash_messages flash
+    = yield

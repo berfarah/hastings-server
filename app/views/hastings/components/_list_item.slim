@@ -1,0 +1,6 @@
+.list-group-item: .row
+  - if text
+    strong.col-md-3.col-sm-2 = title
+    .col-md-6 = text
+  - elsif link
+    strong.col
