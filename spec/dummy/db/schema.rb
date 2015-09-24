@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150923180154) do
+ActiveRecord::Schema.define(version: 20150924185632) do
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -29,6 +29,13 @@ ActiveRecord::Schema.define(version: 20150923180154) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
 
+  create_table "hastings_apps", force: :cascade do |t|
+    t.string   "name"
+    t.string   "ip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "hastings_instances", force: :cascade do |t|
     t.datetime "finished_at"
     t.boolean  "failed",      default: false
@@ -42,23 +49,23 @@ ActiveRecord::Schema.define(version: 20150923180154) do
   create_table "hastings_logs", force: :cascade do |t|
     t.string   "severity"
     t.string   "message"
-    t.integer  "instance_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "loggable_type"
+    t.integer  "loggable_id"
   end
 
-  add_index "hastings_logs", ["instance_id"], name: "index_hastings_logs_on_instance_id"
+  add_index "hastings_logs", ["loggable_id"], name: "index_hastings_logs_on_loggable_id"
+  add_index "hastings_logs", ["loggable_type"], name: "index_hastings_logs_on_loggable_type"
 
   create_table "hastings_tasks", force: :cascade do |t|
     t.string   "name"
-    t.boolean  "external",   default: false
-    t.string   "ip"
     t.string   "script"
     t.string   "scalar"
     t.string   "interval"
     t.boolean  "enabled"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string   "run_at"
   end
 

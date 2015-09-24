@@ -1,16 +1,19 @@
 module Hastings
   class Log < ActiveRecord::Base
     include Searchable
+    belongs_to :loggable, polymorphic: true
 
     SEVERITY = %w(info warn error fatal).freeze
 
-    belongs_to :instance, dependent: :destroy
     validates :severity, :message, presence: true
     validates_inclusion_of :severity, in: SEVERITY
 
-    scope :errors, -> { where(severity: "error".freeze) }
-    scope :date, (lambda do |date|
+    scope :errors, -> { where(severity: :error) }
+    scope :date, -> (date) {
       where(created_at: date.beginning_of_day..date.end_of_day)
-    end)
+    }
+    scope :range, -> (from, to) {
+      where(created_at: from.beginning_of_day..to.end_of_day)
+    }
   end
 end

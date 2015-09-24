@@ -1,4 +1,4 @@
-Rspec.configure do |config|
+RSpec.configure do |config|
   config.before :each, type: :helper do
     helper.class.include Hastings::Engine.routes.url_helpers
   end

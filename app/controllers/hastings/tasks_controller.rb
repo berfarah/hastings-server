@@ -23,6 +23,16 @@ module Hastings
       @tasks = Task.search(params[:search], :name)
     end
 
+    def internal
+      @tasks = Task.where(external: false).search(params[:search], :name)
+      render template: 'hastings/tasks/index'
+    end
+
+    def external
+      @tasks = Task.where(external: true).search(params[:search], :name)
+      render template: 'hastings/tasks/index'
+    end
+
     def search
       @tasks = Task.search(params[:search_query])
     end

@@ -2,8 +2,9 @@ require "hastings/ext/parse_time"
 
 module Hastings
   class Instance < ActiveRecord::Base
+    include Loggable
     belongs_to :task, dependent: :destroy
-    has_many :logs
+
     validate :not_negative_duration
 
     def duration

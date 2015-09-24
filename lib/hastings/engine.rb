@@ -4,7 +4,10 @@ module Hastings
   class Engine < ::Rails::Engine
     isolate_namespace Hastings
 
-    config.generators { |g| g.test_framework :rspec }
+    config.generators do |g|
+      g.test_framework :rspec, fixture: false
+      g.fixture_replacement :factory_girl, dir: "spec/factories"
+    end
     config.active_job.queue_adapter = :delayed_job
     config.assets.paths << File.expand_path("../../assets/stylesheets", __FILE__)
     config.assets.paths << File.expand_path("../../assets/javascripts", __FILE__)

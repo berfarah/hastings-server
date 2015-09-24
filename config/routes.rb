@@ -8,7 +8,7 @@ Hastings::Engine.routes.draw do
 
   resources :tasks, path: '/' do
     collection do
-      post 'external'
+      # post 'log'
       get 'search'
     end
 

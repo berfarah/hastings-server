@@ -3,13 +3,15 @@ require "hastings/ext/standard_deviation"
 module Hastings
   class Task < ActiveRecord::Base
     include Searchable
+
+    SCALAR = %w(days hours minutes seconds).freeze
     # !group Callbacks
     # Reference: https://github.com/carrierwaveuploader/carrierwave#skipping-activerecord-callbacks
     #
     # We can only update the schedule once the file has been stored (after_save)
     # On that note, we want to unschedule before the record is destroyed so the
     # script can't run when we're deleting it.
-    after_save :update_scheduled
+    after_commit :update_scheduled
     before_destroy :unschedule
     # !endgroup
 
@@ -19,31 +21,11 @@ module Hastings
     # !endgroup
 
     # !group Validations
-    validates :name, presence: true
-    validates :external, inclusion: { in: [true, false] }
-
-    # Internal scripts need a file and an interval/scalar
-    with_options if: :internal do
-      validate :script_validation
-      validates :scalar, presence: true
-      validates :scalar, inclusion: { in: %w(days hours minutes seconds) }
-      validates_format_of :interval, with: /\d+/
-      validate :run_at_validation
-    end
-
-    # External scripts need an IP
-    with_options(if: :external) do
-      validates :ip, presence: true, format: /\b(?:\d{1,3}\.){3}\d{1,3}\b/
-    end
-    # !endgroup
-
-    # !group Attributes
-    # Whether a script is internal or external
-    #
-    # @return [Boolean]
-    def internal
-      !external
-    end
+    validates_presence_of :name, :scalar
+    validates_numericality_of :interval
+    validates :scalar, inclusion: { in: SCALAR }
+    validate :run_at_validation
+    validate :script_validation
 
     # @return [Fixnum] seconds
     def run_every
@@ -54,24 +36,14 @@ module Hastings
     #
     # @return [Array<Fixnum, Fixnum>] Mean, Standard Deviation
     def runtime
-      last_10 = instances.last(10).map(&:duration).compact
-      return last_10 if last_10.empty?
-      [last_10.mean.ceil.human_time, last_10.standard_deviation.human_time]
+      last_20 = instances.last(20).map(&:duration).compact
+      return [nil, nil] if last_20.empty?
+      [last_20.mean.ceil, last_20.standard_deviation]
     end
-
-    # For external logging, uses last instance or creates a new one to log to
-    #
-    # @param [Hash] params Hash containing `severity` and `message` for log
-    # @return [Hastings::Log]
-    def external_log(params)
-      (instances.last || instances.create).logs.new(params)
-    end
-    # !endgroup
 
     private
 
       def update_scheduled
-        return unless internal && changed?
         return unschedule unless enabled
         Hastings::Recurring::Script.schedule(schedule_opts)
       end

@@ -9,6 +9,7 @@ module Enumerable
   end
 
   def sample_variance
+    return 0 if length < 2
     inject(0) { |a, e| a + (e - mean)**2 } / (length - 1).to_f
   end
 
