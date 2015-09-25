@@ -20,14 +20,8 @@ div role="main"
               = link_to glyphicon("trash"), task, method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-danger', title: "Delete"
           table.table.meta
             thead: tr
-            - if task.external
-              th.col-md-3 IP
-            - else
               th.col-md-3 Script
               th.col-md-3 Last run at
             tbody: tr
-            - if task.external
-              td = task.ip
-            - else
               td = link_to task.script, task.script.to_s
               td = task.instances.last.try(:started_at)
