@@ -41,20 +41,24 @@ module Hastings
       [last_20.mean.ceil, last_20.standard_deviation]
     end
 
+    def queue
+      "#{name.parameterize}_#{id}"
+    end
+
     private
 
       def update_scheduled
         return unschedule unless enabled
-        Hastings::Recurring::Script.schedule(schedule_opts)
+        Hastings::RecurringTaskJob.schedule(schedule_opts)
       end
 
       def unschedule
-        Hastings::Recurring::Script.unschedule(schedule_opts)
+        Hastings::RecurringTaskJob.unschedule(schedule_opts)
       end
 
       def schedule_opts
         { task: self, run_at: Time.parse(run_at), run_every: run_every,
-          script: script.path, queue: "#{name.parameterize}_#{id}" }
+          script: script.path, queue: queue }
       end
 
       def script_validation

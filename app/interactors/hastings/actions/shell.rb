@@ -7,7 +7,7 @@ module Hastings
     # Gets $stdout and $stderr in real-time from a shell process
     class Shell
       def initialize(script)
-        @command = shell_type script
+        @command = shell_type(script).freeze
       end
 
       def self.run(script, &block)

@@ -12,5 +12,6 @@ module Hastings
     config.assets.paths << File.expand_path("../../assets/stylesheets", __FILE__)
     config.assets.paths << File.expand_path("../../assets/javascripts", __FILE__)
     config.assets.precompile += %w(hastings/app.css hastings/app.js)
+    config.autoload_paths += %W(#{config.root}/app/jobs/concerns)
   end
 end
