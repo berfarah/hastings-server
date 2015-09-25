@@ -3,7 +3,7 @@ require_dependency "hastings/application_controller"
 module Hastings
   # Controller
   class TasksController < ApplicationController
-    before_action :set_task, only: [:show, :edit, :update, :destroy, :toggle]
+    before_action :set_task, only: [:show, :edit, :update, :destroy, :toggle, :run_now]
     skip_before_action :verify_authenticity_token, only: :external
 
     def external
@@ -53,6 +53,14 @@ module Hastings
       @task.save
       respond_to do |format|
         format.html { redirect_to :back, notice: "#{@task.name} has been #{on}" }
+        format.json { head :no_content }
+      end
+    end
+
+    def run_now
+      on = @task.run_now ? "is running now" : "was already running"
+      respond_to do |format|
+        format.html { redirect_to :back, notice: "#{@task.name} #{on}" }
         format.json { head :no_content }
       end
     end

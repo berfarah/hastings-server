@@ -4,6 +4,7 @@ module Hastings
   class Instance < ActiveRecord::Base
     include Loggable
     belongs_to :task, dependent: :destroy
+    belongs_to :job
 
     validate :not_negative_duration
 

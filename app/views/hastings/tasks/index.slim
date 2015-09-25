@@ -15,7 +15,7 @@ div role="main"
               '
               span.label.label-danger Failed
             .pull-right
-              = link_to glyphicon("play"), "#", title: "Run now"
+              = link_to glyphicon("play"), run_now_task_path(task), method: :patch, title: "Run now"
               = link_to glyphicon("pencil"), edit_task_path(task), class: "text-warning", title: "Edit"
               = link_to glyphicon("trash"), task, method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-danger', title: "Delete"
           table.table.meta

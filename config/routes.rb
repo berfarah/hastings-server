@@ -12,7 +12,10 @@ Hastings::Engine.routes.draw do
       get 'search'
     end
 
-    patch 'toggle', on: :member
+    member do
+      patch 'toggle'
+      patch 'run_now'
+    end
 
     resources :instances, shallow: true, only: [:show, :index] do
       resources :logs, only: [:index]

@@ -45,6 +45,15 @@ module Hastings
       "#{name.parameterize}_#{id}"
     end
 
+    def run_now
+      pause
+      Hastings::TaskJob.run(schedule_opts)
+    end
+
+    def run_now_done
+      unpause
+    end
+
     private
 
       def update_scheduled
@@ -54,6 +63,14 @@ module Hastings
 
       def unschedule
         Hastings::RecurringTaskJob.unschedule(schedule_opts)
+      end
+
+      def pause
+        Hastings::RecurringTaskJob.pause(schedule_opts)
+      end
+
+      def unpause
+        Hastings::RecurringTaskJob.unpause(schedule_opts)
       end
 
       def schedule_opts

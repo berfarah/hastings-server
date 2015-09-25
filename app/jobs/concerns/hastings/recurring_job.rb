@@ -19,17 +19,14 @@ module Hastings
 
       def pause(options = {})
         @options = options
-        job.locked_at = Time.zone.now
-        job.locked_by = :web_server
-        job.save!
+        job || return
+        job.update_attributes!(locked_at: Time.zone.now, locked_by: :web_server)
       end
 
       def unpause(options = {})
         @options = options
-        return unless job.locked_at || job.locked_by
-        job.locked_at = nil
-        job.lockedb_by = nil
-        job.save!
+        job || return
+        job.update_attributes!(locked_at: nil, locked_by: nil)
       end
 
       # Just overwriting this so that we pass in our options

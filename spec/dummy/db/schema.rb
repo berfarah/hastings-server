@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150924185632) do
+ActiveRecord::Schema.define(version: 20150925195642) do
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -42,8 +42,10 @@ ActiveRecord::Schema.define(version: 20150924185632) do
     t.integer  "task_id"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.integer  "job_id"
   end
 
+  add_index "hastings_instances", ["job_id"], name: "index_hastings_instances_on_job_id"
   add_index "hastings_instances", ["task_id"], name: "index_hastings_instances_on_task_id"
 
   create_table "hastings_logs", force: :cascade do |t|
