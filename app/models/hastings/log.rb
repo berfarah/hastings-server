@@ -2,6 +2,8 @@ module Hastings
   class Log < ActiveRecord::Base
     include Searchable
     belongs_to :loggable, polymorphic: true
+    belongs_to :instance, foreign_key: "loggable_id", foreign_type: "Instance"
+    belongs_to :app, foreign_key: "loggable_id", foreign_type: "App"
 
     SEVERITY = %w(info warn error fatal).freeze
 

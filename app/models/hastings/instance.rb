@@ -13,6 +13,10 @@ module Hastings
       @duration ||= (finished_at - created_at).ceil
     end
 
+    def to_s
+      task.name
+    end
+
     # Can't alias this because this method is created dynamically
     def started_at
       created_at
