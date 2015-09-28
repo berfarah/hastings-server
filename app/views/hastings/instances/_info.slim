@@ -1,0 +1,7 @@
+.col-md-6: .panel.panel-default
+  - if header
+    .panel-heading = link_to "Last Instance", instance
+  .list-group
+    = list_item "Started at", time_format(instance.started_at)
+    = list_item "Finished at", time_format(instance.finished_at)
+    = list_item "Duration", time_to_complete(instance.duration)

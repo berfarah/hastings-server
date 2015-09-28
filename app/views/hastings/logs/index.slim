@@ -2,14 +2,4 @@ h1.page-header
   ' Logs
   = of_instance
 
-.panel: table.table.table-hover
-  thead: tr
-    th.col-xs-3.col-sm-2 Time
-    th.col-xs-1 Severity
-    th Message
-  tbody
-    - @logs.each do |log|
-      tr class=severity_class(log.severity)
-        td = about_time log.created_at
-        td = log.severity.upcase
-        td = log.message
+= render partial: 'hastings/logs/list', locals: { logs: @logs, header: false }

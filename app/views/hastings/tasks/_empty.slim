@@ -1,0 +1,9 @@
+p.lead
+  ' #{t 'task_not_run'}
+  - unless @task.enabled
+    = raw t 'task_not_run_disabled', enable_link: link_to('enable it', toggle_task_path(@task), method: :patch)
+  - else
+    - if @task.run_at > Time.now
+      = t 'task_not_run_future', time: time_ago_in_words(@task.run_at)
+    - else
+      = t 'task_not_run_past', time: time_ago_in_words(@task.run_at)

@@ -1,0 +1,6 @@
+en:
+  task_not_run: It looks like this task hasn't run yet.
+  task_not_run_disabled: In order to make it run, please %{enable_link} it.
+  task_not_run_future: It should run in %{time}.
+  task_not_run_past: It should have run %{time} ago. Please make sure the task workers are running.
+  logs_empty: No logs recorded yet
