@@ -1,8 +1,11 @@
 module Hastings
   module Components
-    def list_item(title, text)
+    def list_item(title, text, **args)
+      header_size = args[:header_size] || 2
+      body_size = 8 - header_size
+
       render partial: component("list_item"),
-             locals: { title: title, text: text }
+             locals: { title: title, text: text, body_size: body_size, header_size: header_size }
     end
 
     def list_item_link(title, link)

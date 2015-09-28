@@ -11,9 +11,11 @@ div role="main"
             = link_to enabled(task.enabled), toggle_task_path(task), method: :patch
             ' 
             = link_to task.name, task
-            - if task.instances.last.try(:failed?)
-              '
+            '
+            - if task.failed?
               span.label.label-danger Failed
+            - if task.running?
+              span.label.label-info Running
             .pull-right
               = link_to glyphicon("play"), run_now_task_path(task), method: :patch, title: "Run now"
               = link_to glyphicon("pencil"), edit_task_path(task), class: "text-warning", title: "Edit"

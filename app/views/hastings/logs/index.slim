@@ -2,14 +2,14 @@ h1.page-header
   ' Logs
   = of_instance
 
-table.table
+.panel: table.table.table-hover
   thead: tr
-    th Time
-    th Severity
+    th.col-xs-3.col-sm-2 Time
+    th.col-xs-1 Severity
     th Message
   tbody
     - @logs.each do |log|
       tr class=severity_class(log.severity)
-        td = time_default log.created_at
+        td = about_time log.created_at
         td = log.severity.upcase
         td = log.message

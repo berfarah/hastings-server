@@ -4,28 +4,25 @@ h1.page-header Instance
   .col-md-6: .panel: .list-group
     .list-group-item
       strong = link_to "Task #{@instance.task.name}", @instance.task
-    .list-group-item: .row
-      strong.col-sm-3 Runs every
-      .col-sm-9
-        ' #{@instance.task.interval} #{@instance.task.scalar}
-        - if @instance.task.run_at
-          ' starting at
-          = @instance.task.run_at
+    = list_item "Runs every", "#{@instance.task.interval} #{@instance.task.scalar}"\
+                " #{ra = @instance.task.run_at; ra && " starting at #{ra}"}"
+    = list_item "Script", link_to(@instance.task.script, @instance.task.script.to_s, target: "_blank")
       
   .col-md-6: .panel: .list-group
     = list_item "Started at", time_format(@instance.started_at)
     = list_item "Finished at", time_format(@instance.finished_at)
     = list_item "Duration", time_to_complete(@instance.duration)
 
-h3 Log
-table.table.table-hover.table-condensed
-  thead: tr
-    th.col-md-2.col-xs-3 Time
-    th.col-xs-1 Severity
-    th Message
-  tbody
-  - @instance.logs.reverse.each do |l|
-    tr class=severity_class(l.severity)
-      td = time_ago_in_words(l.created_at) << ' ago'
-      td = l.severity.capitalize
-      td = l.message
+.panel.panel-default
+  .panel-heading Logs
+  table.table.table-hover.table-condensed
+    thead: tr
+      th.col-sm-2.col-xs-2 Time
+      th.col-xs-1 Severity
+      th Message
+    tbody
+    - @instance.logs.reverse.each do |l|
+      tr class=severity_class(l.severity)
+        td = time_ago_in_words(l.created_at) << ' ago'
+        td = l.severity.capitalize
+        td = l.message
