@@ -20,7 +20,7 @@ module Hastings
     # GET /tasks
     # GET /tasks.json
     def index
-      @tasks = Task.search(params[:search], :name)
+      @tasks = Task.includes(:instances)
     end
 
     def internal
@@ -58,9 +58,9 @@ module Hastings
     end
 
     def run_now
-      on = @task.run_now ? "is running now" : "was already running"
+      on = @task.run_now ? "running now" : "already running"
       respond_to do |format|
-        format.html { redirect_to :back, notice: "#{@task.name} #{on}" }
+        format.html { redirect_to :back, notice: "#{@task.name} is #{on}" }
         format.json { head :no_content }
       end
     end
@@ -119,7 +119,7 @@ module Hastings
 
       # Use callbacks to share common setup or constraints between actions.
       def set_task
-        @task = Task.find(params[:id])
+        @task = Task.includes(instances: :logs).find(params[:id])
       end
 
       # Never trust parameters from the scary internet, only allow the white list through.
