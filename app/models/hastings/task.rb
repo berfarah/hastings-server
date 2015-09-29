@@ -33,6 +33,10 @@ module Hastings
       [last_20.mean.ceil, last_20.standard_deviation]
     end
 
+    def last_run
+      instances.last.try(:started_at) || "N/A"
+    end
+
     private
 
       def script_validation

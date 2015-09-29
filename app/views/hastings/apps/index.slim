@@ -19,3 +19,4 @@ div role="main"
             tbody: tr
               td = app.ip
               td = about_time(app.logs.try(:last).try(:created_at)) || "N/A"
+.text-center = paginate @apps

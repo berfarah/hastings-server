@@ -23,6 +23,7 @@ module Hastings
     end
 
     def about_time(time)
+      return time unless time.is_a? Time
       "<time datetime='#{time_default time}' title='#{time_default time}' "\
       "data-toggle='tooltip' data-placement='top'>"\
       "#{time_ago_in_words time} ago</time>".html_safe

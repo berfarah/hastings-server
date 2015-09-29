@@ -8,7 +8,7 @@ module Hastings
     # GET /tasks
     # GET /tasks.json
     def index
-      @tasks = Task.includes(:instances)
+      @tasks = Task.order('LOWER(name) asc').page(params[:page]).per(12).includes(:instances)
     end
 
     def internal

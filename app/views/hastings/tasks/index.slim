@@ -26,4 +26,5 @@ div role="main"
               th.col-md-3 Last run at
             tbody: tr
               td = link_to task.script, task.script.to_s
-              td = task.instances.last.try(:started_at)
+              td = about_time task.last_run
+.text-center = paginate @tasks

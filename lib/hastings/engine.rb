@@ -1,4 +1,5 @@
 require "delayed_job_recurring"
+require "kaminari"
 
 module Hastings
   class Engine < ::Rails::Engine

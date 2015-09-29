@@ -17,7 +17,7 @@ module Hastings
     end
 
     def index
-      @apps = App.includes(:logs)
+      @apps = App.includes(:logs).page(params[:page]).per(12)
     end
 
     def show

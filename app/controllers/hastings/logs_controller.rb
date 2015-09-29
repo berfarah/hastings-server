@@ -8,7 +8,7 @@ module Hastings
     # GET /logs
     # GET /logs.json
     def index
-      @logs = Log.search(params[:search], :message).limit(50).reverse_order
+      @logs = Log.order(created_at: :desc).page(params[:page]).per(50)
       @logs = @logs.where(instance: params[:instance_id]) if params[:instance_id]
     end
 
