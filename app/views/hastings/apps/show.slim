@@ -1,0 +1,11 @@
+h1.page-header
+  = @app.name
+  '
+  = link_to 'Edit', edit_app_path(@app), class: 'btn btn-primary btn-inline'
+
+p.lead
+  strong IP
+  '
+  = @app.ip
+
+= render partial: 'hastings/logs/list', locals: { logs: @app.logs.reverse, header: true }

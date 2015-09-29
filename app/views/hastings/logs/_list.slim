@@ -1,7 +1,9 @@
 .panel.panel-default
   - if header
     .panel-heading Logs
-  - if logs
+  - if logs.empty?
+    .panel-body = t 'logs_empty'
+  - else
     table.table.table-hover
       thead: tr
         th.col-xs-3.col-sm-2 Time
@@ -13,6 +15,4 @@
             td = about_time log.created_at
             td = log.severity.upcase
             td = log.message
-  - else
-    .panel-body = t 'logs_empty'
   

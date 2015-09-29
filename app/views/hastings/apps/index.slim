@@ -1,0 +1,21 @@
+h1.page-header
+  ' Apps
+  = link_to 'New App', new_app_path, class: 'btn btn-primary btn-inline'
+  
+div role="main"
+  .row
+    - @apps.each do |app|
+      .col-lg-6
+        article.panel.panel-default
+          .panel-heading: h4
+            = link_to app.name, app
+            .pull-right
+              = link_to glyphicon("pencil"), edit_app_path(app), class: "text-warning", title: "Edit"
+              = link_to glyphicon("trash"), app, method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-danger', title: "Delete"
+          table.table.meta
+            thead: tr
+              th.col-md-3 IP
+              th.col-md-3 Last log at
+            tbody: tr
+              td = app.ip
+              td = about_time(app.logs.try(:last).try(:created_at)) || "N/A"

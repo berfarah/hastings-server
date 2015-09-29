@@ -4,18 +4,6 @@ module Hastings
   # Controller
   class TasksController < ApplicationController
     before_action :set_task, only: [:show, :edit, :update, :destroy, :toggle, :run_now]
-    skip_before_action :verify_authenticity_token, only: :external
-
-    def external
-      return not_authenticated unless (@task = Task.find_by_ip(request.ip))
-      log = @task.external_log(params.require(:log).permit(:severity, :message))
-
-      if log.save
-        render json: log.to_json
-      else
-        render json: { errors: log.errors }.to_json, status: :bad_request
-      end
-    end
 
     # GET /tasks
     # GET /tasks.json
