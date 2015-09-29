@@ -38,7 +38,8 @@ $(document).ready(function () {
   $('[data-toggle="tooltip"]').tooltip();
 
   $("body").keypress(function (e) {
-    var tag = e.target.tagName.toLowerCase();
+    var tag = e.target.tagName.toLowerCase(),
+        $box = $("#query");
 
     // Alphanumeric keys + /
     if(
@@ -53,12 +54,13 @@ $(document).ready(function () {
       // We don't want to capture /
       if(e.keyCode === 47) {
         e.preventDefault();
+        return $box.select();
       }
-      $("#search").select();
+      $box.focus().val($box.val().trim() + " ");
     }
   }).keyup(function (e) {
     if(e.keyCode === 27) {
-      $('#search').blur();
+      $("#query").blur();
     }
   });
 });

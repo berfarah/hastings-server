@@ -11,18 +11,9 @@ module Hastings
       @tasks = Task.order('LOWER(name) asc').page(params[:page]).per(12).includes(:instances)
     end
 
-    def internal
-      @tasks = Task.where(external: false).search(params[:search], :name)
-      render template: 'hastings/tasks/index'
-    end
-
-    def external
-      @tasks = Task.where(external: true).search(params[:search], :name)
-      render template: 'hastings/tasks/index'
-    end
-
     def search
-      @tasks = Task.search(params[:search_query])
+      @tasks = Task.search(params[:query]).records.includes(:instances).page(params[:page]).per(12)
+      render :index
     end
 
     # GET /tasks/1

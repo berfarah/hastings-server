@@ -1,8 +1,8 @@
 Hastings::Engine.routes.draw do
   resources :logs, only: [:index] do
     collection do
-      get "errors"
       get "date/:date" => "logs#date", as: :date
+      get "search"
     end
   end
 
@@ -23,6 +23,7 @@ Hastings::Engine.routes.draw do
     end
 
     resources :instances, shallow: true, only: [:show, :index] do
+      get "search", on: :member
       resources :logs, only: [:index]
     end
   end

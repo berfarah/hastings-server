@@ -8,12 +8,12 @@ module Hastings
     # GET /logs
     # GET /logs.json
     def index
-      @logs = Log.order(created_at: :desc).page(params[:page]).per(50)
+      @logs = Log.order(created_at: :desc).includes(:loggable).page(params[:page]).per(50)
       @logs = @logs.where(instance: params[:instance_id]) if params[:instance_id]
     end
 
-    def errors
-      @logs = Log.errors.limit(50).reverse_order
+    def search
+      @logs = Log.search(params[:query]).page(params[:page]).per(50)
       render :index
     end
 

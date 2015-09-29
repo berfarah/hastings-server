@@ -16,6 +16,11 @@ module Hastings
       end
     end
 
+    def search
+      @apps = App.search(params[:query]).records.includes(:logs).page(params[:page]).per(12)
+      render :index
+    end
+
     def index
       @apps = App.includes(:logs).page(params[:page]).per(12)
     end

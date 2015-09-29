@@ -11,15 +11,12 @@ module Hastings
     end
 
     def search
-      url = params[:action] == "index" ? "" : tasks_path
-
-      form_for url, html: { method: :get, role: "search", class: "navbar-form navbar-left" } do
+      controller = params[:controller] == "hastings/instances" ? "hastings/tasks" : params[:controller]
+      form_for controller, url: { controller: controller, action: "search", id: params[:id] }, html: { method: :get, role: "search", class: "navbar-form navbar-left" } do
         content_tag :div, class: "form-group" do
-          text_field_tag "search", params[:search], size: 50, placeholder: "Search", class: "form-control"
+          text_field_tag "query", params[:query], size: 50, placeholder: "Search", class: "form-control"
         end
       end
-      # form.navbar-form.navbar-left role="search" action=search_url
-      #   .form-group: input type="text" class="form-control" placeholder="Search" size="50" name="search_query" value=params[:search_query]
     end
 
     def about_time(time)

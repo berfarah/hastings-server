@@ -2,7 +2,13 @@ require "hastings/ext/parse_time"
 
 module Hastings
   class Instance < ActiveRecord::Base
+    include Searchable
     include Loggable
+
+    # I really want to do this to solve the N*2 problem with logs#index, but if
+    # I do I can't seem to unscope it when called from TasksController
+    # default_scope { includes(:task) }
+
     belongs_to :task, dependent: :destroy
     belongs_to :job
 
@@ -13,9 +19,11 @@ module Hastings
       @duration ||= (finished_at - created_at).ceil
     end
 
-    def to_s
-      task.name
+    def name
+      @name ||= task.name
     end
+
+    alias_method :to_s, :name
 
     # Can't alias this because this method is created dynamically
     def started_at

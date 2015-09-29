@@ -34,11 +34,15 @@ module Hastings
     end
 
     def last_run
-      instances.last.try(:started_at) || "N/A"
+      @last_run ||= instances.last.try(:started_at) || "N/A"
     end
 
     def to_param
-      "#{id} #{name}".parameterize
+      @to_param ||= "#{id} #{name}".parameterize.freeze
+    end
+
+    def as_indexed_json(options = {})
+      as_json methods: [:name, :last_run, :run_every, :script]
     end
 
     private

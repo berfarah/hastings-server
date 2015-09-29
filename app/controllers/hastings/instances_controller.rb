@@ -6,11 +6,16 @@ module Hastings
 
     # GET /instances
     def index
-      @instances = Instance.all.where(task: params[:task_id])
+      @instances = Instance.where(task: params[:task_id])
     end
 
     # GET /instances/1
     def show
+    end
+
+    def search
+      @logs = Log.where(loggable_id: params[:id], loggable_type: "Hastings::Instance").search(params[:query]).page(params[:page]).per(40)
+      render "hastings/logs/index"
     end
 
     private

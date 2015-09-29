@@ -22,6 +22,9 @@ gem "turbolinks"
 gem "jquery-turbolinks"
 gem "kaminari"
 
+gem "elasticsearch-model"
+gem "elasticsearch-rails"
+
 group :production do
   gem "pg"
 end
