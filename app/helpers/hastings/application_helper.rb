@@ -12,9 +12,11 @@ module Hastings
 
     def search
       controller = params[:controller] == "hastings/instances" ? "hastings/tasks" : params[:controller]
-      form_for controller, url: { controller: controller, action: "search", id: params[:id] }, html: { method: :get, role: "search", class: "navbar-form navbar-left" } do
+      form_for controller, url: { controller: controller, action: "search", id: params[:id] }, html: { method: :get, role: "search", class: "navbar-form navbar-left navbar-search" } do
+        content_tag :div, "Hello"
         content_tag :div, class: "form-group" do
-          text_field_tag "query", params[:query], size: 50, placeholder: "Search", class: "form-control"
+          concat text_field_tag "query", params[:query], size: 50, placeholder: "Search", class: "form-control"
+            concat content_tag :i, nil, class: "glyphicon glyphicon-search"
         end
       end
     end

@@ -111,3 +111,39 @@ table .btn-inline {
     padding: 10px 15px;
   }
 }
+
+.navbar-form.navbar-search {
+  margin-top: 10.5px;
+  margin-bottom: 11px;
+
+  .form-group {
+    position: relative;
+
+    .glyphicon {
+      color: lighten($brand-primary, 30%);
+      position: absolute;
+      left: 0;
+      height: 42px;
+      width: 42px;
+      text-align: center;
+      line-height: 41px;
+      font-size: 16px;
+    }
+  }
+
+  input[type=text] {
+    height: 42px;
+    border-radius: 2px;
+    padding: 0 10px 0 42px;
+    background: darken($brand-primary, 7%);
+    box-shadow: none;
+
+    &:hover, &:focus {
+
+      & + .glyphicon {
+        color: white;
+      }
+      box-shadow: none;
+    }
+  }
+}
