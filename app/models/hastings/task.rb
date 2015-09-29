@@ -37,6 +37,10 @@ module Hastings
       instances.last.try(:started_at) || "N/A"
     end
 
+    def to_param
+      "#{id} #{name}".parameterize
+    end
+
     private
 
       def script_validation
