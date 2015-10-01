@@ -23,7 +23,7 @@ Hastings::Engine.routes.draw do
     end
 
     resources :instances, shallow: true, only: [:show, :index] do
-      get "search", on: :member
+      get "search", on: :collection
       resources :logs, only: [:index]
     end
   end

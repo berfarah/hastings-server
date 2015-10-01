@@ -34,7 +34,7 @@ module Hastings
     end
 
     def last_run
-      @last_run ||= instances.last.try(:started_at) || "N/A"
+      @last_run ||= instances.last.try(:started_at)
     end
 
     def to_param
