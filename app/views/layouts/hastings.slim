@@ -1,7 +1,7 @@
 html
   title Hastings
-  = stylesheet_link_tag 'hastings/app', media: 'all', 'data-turbolinks-track' => true
-  = javascript_include_tag 'hastings/app', 'data-turbolinks-track' => true
+  = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+  = javascript_include_tag 'application', 'data-turbolinks-track' => true
   = csrf_meta_tags
 
   nav.navbar.navbar-inverse.navbar-static-top:.container
@@ -11,10 +11,10 @@ html
       / form.navbar-form.navbar-left role="search" action=search_url
       /   .form-group: input type="text" class="form-control" placeholder="Search" size="50" name="search_query" value=params[:search_query]
       ul.nav.navbar-nav.navbar-right
-        = nav_link_to 'Tasks', tasks_path, ['hastings/tasks', 'hastings/instances']
-        = nav_link_to 'Apps', apps_path, 'hastings/apps'
+        = nav_link_to 'Tasks', tasks_path, ['tasks', 'instances']
+        = nav_link_to 'Apps', apps_path, 'apps'
         / li = nav_link_to 'Emails', emails_path, 'emails'
-        = nav_link_to 'Logs', logs_path, 'hastings/logs'
+        = nav_link_to 'Logs', logs_path, 'logs'
 
   .container
     = flash_messages flash

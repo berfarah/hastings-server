@@ -1,5 +1,5 @@
 class RenameSirverityToSeverityBecauseImAnIdiot < ActiveRecord::Migration
   def change
-    rename_column :hastings_logs, :serverity, :severity
+    rename_column :logs, :serverity, :severity
   end
 end

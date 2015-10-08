@@ -1,4 +1,4 @@
-Hastings::Engine.routes.draw do
+Application.routes.draw do
   resources :logs, only: [:index] do
     collection do
       get "date/:date" => "logs#date", as: :date
@@ -15,6 +15,7 @@ Hastings::Engine.routes.draw do
   resources :tasks, path: "/" do
     collection do
       get "search"
+      get "events"
     end
 
     member do

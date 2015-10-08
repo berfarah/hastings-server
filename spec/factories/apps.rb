@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :app, class: Hastings::App do
+  factory :app do
     name { Faker::Hacker.noun }
     ip { Faker::Internet.ip_v4_address }
 

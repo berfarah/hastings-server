@@ -1,6 +1,0 @@
-h1.page-header
-  ' Logs
-  = of_instance
-
-= render partial: 'hastings/logs/list', locals: { logs: @logs, header: false }
-.text-center = paginate @logs

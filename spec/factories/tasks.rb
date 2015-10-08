@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :task, class: Hastings::Task do
+  factory :task do
     name { Faker::Hacker.noun }
     interval { rand(1..60) }
     scalar   { %w(minutes hours days).sample }

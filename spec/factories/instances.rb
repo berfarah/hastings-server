@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :instance, class: Hastings::Instance do
+  factory :instance do
     finished_at { Time.zone.now + (rand(1..30)).minutes }
     failed { [true, false].sample }
     task
