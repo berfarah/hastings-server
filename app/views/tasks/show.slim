@@ -17,7 +17,7 @@ h1.page-header
     .col-md-6: .panel.panel-info
       .panel-heading = link_to "All Instances", task_instances_path(@task)
       .list-group
-        = list_item "Total #", @task.instances.length
+        = list_item "Total #", @task.instances.size
         = list_item "Average runtime", @task.runtime.average
         = list_item "Standard Deviation", "&plusmn; #{@task.runtime.standard_deviation}".html_safe
 

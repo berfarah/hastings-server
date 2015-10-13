@@ -8,7 +8,7 @@ class Instance < ActiveRecord::Base
   # I do I can't seem to unscope it when called from TasksController
   # default_scope { includes(:task) }
 
-  belongs_to :task, dependent: :destroy, touch: true
+  belongs_to :task, touch: true, counter_cache: true
   belongs_to :job
 
   validate :not_negative_duration

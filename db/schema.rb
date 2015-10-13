@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150925195642) do
+ActiveRecord::Schema.define(version: 20151012172234) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "apps", force: :cascade do |t|
     t.string   "name"
@@ -34,7 +37,7 @@ ActiveRecord::Schema.define(version: 20150925195642) do
     t.datetime "updated_at"
   end
 
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "instances", force: :cascade do |t|
     t.datetime "finished_at"
@@ -45,8 +48,8 @@ ActiveRecord::Schema.define(version: 20150925195642) do
     t.integer  "job_id"
   end
 
-  add_index "instances", ["job_id"], name: "index_instances_on_job_id"
-  add_index "instances", ["task_id"], name: "index_instances_on_task_id"
+  add_index "instances", ["job_id"], name: "index_instances_on_job_id", using: :btree
+  add_index "instances", ["task_id"], name: "index_instances_on_task_id", using: :btree
 
   create_table "logs", force: :cascade do |t|
     t.string   "severity"
@@ -57,8 +60,8 @@ ActiveRecord::Schema.define(version: 20150925195642) do
     t.integer  "loggable_id"
   end
 
-  add_index "logs", ["loggable_id"], name: "index_logs_on_loggable_id"
-  add_index "logs", ["loggable_type"], name: "index_logs_on_loggable_type"
+  add_index "logs", ["loggable_id"], name: "index_logs_on_loggable_id", using: :btree
+  add_index "logs", ["loggable_type"], name: "index_logs_on_loggable_type", using: :btree
 
   create_table "tasks", force: :cascade do |t|
     t.string   "name"
@@ -66,9 +69,10 @@ ActiveRecord::Schema.define(version: 20150925195642) do
     t.string   "scalar"
     t.string   "interval"
     t.boolean  "enabled"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.string   "run_at"
+    t.integer  "instances_count", default: 0, null: false
   end
 
 end
