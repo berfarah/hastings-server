@@ -25,7 +25,7 @@ class ShellScript
               block.call nil, line, thread
             end
           end
-        end
+        end.join
       end
 
       thread.join # don't exit until the external process is done
