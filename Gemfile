@@ -8,7 +8,9 @@ gem "rails", "~> 4.2.1"
 gem "bootstrap-sass"
 gem "data-confirm-modal", github: "ifad/data-confirm-modal"
 gem "slim"
-gem "sass-rails", "~> 5.0"
+# gem "sass-rails", "~> 5.0"
+# Sass-C should compile faster
+gem "sassc-rails"
 gem "uglifier", ">= 1.3.0"
 gem "jquery-rails"
 gem "redis"
@@ -40,6 +42,7 @@ group :development do
   gem "better_errors" # Much more useful errors page
   gem "meta_request"  # Use with https://github.com/dejan/rails_panel
   gem "quiet_assets"  # Turns off asset generation in log
+  gem "bullet"
 end
 
 
@@ -60,4 +63,5 @@ group :test do
   gem "spring-commands-rspec"
   gem "rubocop" # Linting according to ruby style guide
   gem "shoulda-matchers" # Easy testing for common rails functionality
+  gem 'stackprof'
 end
