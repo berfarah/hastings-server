@@ -42,6 +42,6 @@ class ShellScript
       when /\.rb$/        then 'ruby'
       when /\.(sh|bash)$/ then 'bash -l'
       else 'bash -l -c'
-      end << " #{script}"
+      end << " '#{script}'"
     end
 end
