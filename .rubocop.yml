@@ -1,0 +1,6 @@
+AllCops:
+  RunRailsCops: true
+Style/IndentationConsistency:
+  EnforcedStyle: rails
+Style/StringLiterals:
+  EnforcedStyle: double_quotes

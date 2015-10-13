@@ -1,16 +1,21 @@
 module RecurringJob
   def self.included(base)
     base.include ::Delayed::RecurringJob
-    base.run_at(Time.now + 5)
+    base.run_at(Time.zone.now + 5)
     base.extend(ClassMethods)
   end
 
+  # We need initialize to take options
+  def initialize(_options = {}); end
+
   module ClassMethods
+    # Relies on jobs, which relies on @options
     def schedule(options = {})
       @options = options
       super
     end
 
+    # Relies on jobs, which relies on @options
     def unschedule(options = {})
       @options = options
       super()

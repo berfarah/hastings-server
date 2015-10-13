@@ -2,7 +2,7 @@ class Task
   class Job
     def initialize(options = {})
       @task    = options.delete(:task).id
-      @script  = options.delete(:script)
+      @script  = options.delete(:script).path
       @options = options
       super()
     end

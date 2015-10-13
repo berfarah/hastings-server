@@ -1,9 +1,16 @@
+include ActionDispatch::TestProcess
+
 FactoryGirl.define do
   factory :task do
     name { Faker::Hacker.noun }
     interval { rand(1..60) }
     scalar   { %w(minutes hours days).sample }
     run_at   { (Time.now + rand(1..60)).strftime("%H:%M") }
+    script   { fixture_file_upload(Rails.root.join("spec", "support", "test_script.sh")) }
+
+    after :create do |task, e|
+      task.update_column :script, "test_script.sh"
+    end
 
     factory :task_with_instances do
       transient do

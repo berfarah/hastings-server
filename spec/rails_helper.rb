@@ -33,6 +33,10 @@ RSpec.configure do |config|
   # instead of true.
   config.include FactoryGirl::Syntax::Methods
 
+  config.after(:each) do
+    FileUtils.rm_rf(Dir[Rails.root.join("spec", "support", "uploads")])
+  end
+
   config.expect_with :rspec do |expectations|
     # This option will default to `true` in RSpec 4. It makes the `description`
     # and `failure_message` of custom matchers include text for helper methods
