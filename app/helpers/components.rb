@@ -7,6 +7,11 @@ module Components
            locals: { title: title, text: text, body_size: body_size, header_size: header_size }
   end
 
+  def logs_list(logs, header: nil)
+    header = header == true ? "Logs" : header
+    render partial: "logs/list", locals: { logs: logs, header: header }
+  end
+
   def list_item_link(title, link)
     render partial: component("list_item"),
            locals: { title: title, link: link }

@@ -1,5 +1,5 @@
 class Task
   class RecurringJob < Job
-    include ::RecurringJob
+    include ::RecurringJobConcern
   end
 end

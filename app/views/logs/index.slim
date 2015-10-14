@@ -2,5 +2,7 @@ h1.page-header
   ' Logs
   = of_instance
 
-= render partial: 'logs/list', locals: { logs: @logs, header: false }
+- @grouped_logs.each do |name, logs|
+  = logs_list(logs, header: name)
+
 .text-center = paginate @logs

@@ -20,10 +20,6 @@ class Log < ActiveRecord::Base
     where(created_at: from.beginning_of_day..to.end_of_day)
   }
 
-  def from
-    @from ||= loggable.name
-  end
-
   def as_indexed_json(options = {})
     as_json methods: [:severity, :message, :from]
   end

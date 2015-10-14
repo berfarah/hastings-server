@@ -10,14 +10,13 @@ class Task
       # the script can't run while we're deleting it.
       after_commit :update_schedule
       before_destroy :unschedule
+      delegate :failed?, :running?,
+               :update_schedule, :unschedule,
+               to: :dispatcher
     end
 
-    def update_schedule
-      TaskDispatcher.new(self).update_schedule
-    end
-
-    def unschedule
-      TaskDispatcher.new(self).unschedule
+    def dispatcher
+      @dispatcher ||= TaskDispatcher.new(self)
     end
   end
 end

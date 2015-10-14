@@ -64,4 +64,5 @@ group :test do
   gem "rubocop" # Linting according to ruby style guide
   gem "shoulda-matchers" # Easy testing for common rails functionality
   gem 'stackprof'
+  gem 'simplecov', require: false
 end

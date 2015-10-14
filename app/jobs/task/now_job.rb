@@ -1,8 +1,8 @@
 class Task
   class NowJob < Job
     def before(job)
-      TaskDispatcher.new(@instance.task).pause
       super
+      TaskDispatcher.new(@instance.task).pause
     end
 
     def after(job)

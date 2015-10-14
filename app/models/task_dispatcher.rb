@@ -6,11 +6,11 @@ class TaskDispatcher
   end
 
   def running?
-    !@task.instances.where.not(job_id: nil).exists?
+    @task.instances.last.try :job_id
   end
 
   def failed?
-    @task.instances.last.failed
+    @task.instances.last.try :failed
   end
 
   def queue

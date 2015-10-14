@@ -1,4 +1,4 @@
-module RecurringJob
+module RecurringJobConcern
   def self.included(base)
     base.include ::Delayed::RecurringJob
     base.run_at(Time.zone.now + 5)

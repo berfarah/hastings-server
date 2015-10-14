@@ -22,10 +22,5 @@ Application.routes.draw do
       patch "toggle"
       patch "run_now"
     end
-
-    resources :instances, shallow: true, only: [:show, :index] do
-      get "search", on: :collection
-      resources :logs, only: [:index]
-    end
   end
 end

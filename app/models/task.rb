@@ -33,14 +33,6 @@ class Task < ActiveRecord::Base
     @runtime ||= Runtime.new(self)
   end
 
-  def failed?
-    instances.last.try(:failed)
-  end
-
-  def running?
-    instances.last.try(:job_id)
-  end
-
   def stats
     @stats ||= Statistics.new(self)
   end

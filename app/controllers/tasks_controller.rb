@@ -1,7 +1,8 @@
 # Controller
 class TasksController < ApplicationController
   include ActionController::Live
-  before_action :set_task, only: [:show, :edit, :update, :destroy, :toggle, :run_now]
+  before_action :set_task, only: [:edit, :update, :destroy, :toggle]
+  before_action :set_task_with_instances, only: [:show, :run_now]
 
   # GET /tasks
   # GET /tasks.json
@@ -32,6 +33,10 @@ class TasksController < ApplicationController
   # GET /tasks/1
   # GET /tasks/1.json
   def show
+    @logs = Log.includes(:instance)
+               .where(instances: { task_id: params[:id] })
+               .page(params[:page]).per(20)
+    # @grouped_logs = @logs.group_by { |l| l.instance.created_at.to_date }
   end
 
   # GET /tasks/new
@@ -111,7 +116,11 @@ class TasksController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_task
-      @task = Task.includes(instances: :logs).find(params[:id])
+      @task = Task.find(params[:id])
+    end
+
+    def set_task_with_instances
+      @task = Task.includes(:instances).find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

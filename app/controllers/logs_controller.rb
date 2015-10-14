@@ -5,8 +5,10 @@ class LogsController < ApplicationController
   # GET /logs
   # GET /logs.json
   def index
-    @logs = Log.order(created_at: :desc).includes(:loggable).page(params[:page]).per(50)
-    @logs = @logs.where(instance: params[:instance_id]) if params[:instance_id]
+    @logs = Log.order(created_at: :desc)
+               .page(params[:page]).per(20)
+               .includes(:loggable)
+    @grouped_logs = @logs.group_by { |l| l.loggable.name }
   end
 
   def search
