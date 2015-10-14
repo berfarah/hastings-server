@@ -19,9 +19,19 @@ RSpec.describe Instance, type: :model do
       subject { create(:instance, finished_at: nil).duration }
       it { is_expected.to be_nil }
     end
+
+    context "when finished_at is before created_at" do
+      subject { create(:instance, finished_at: Time.now - 5) }
+      it { is_expected.not_to be_valid }
+    end
   end
 
-  it { is_expected.to respond_to :started_at }
+  describe "#started_at" do
+    subject { create(:instance) }
+    it "aliases to created_at" do
+      expect(subject.started_at).to eq(subject.created_at)
+    end
+  end
 
   it_behaves_like "loggable", FactoryGirl.create(:instance)
 end

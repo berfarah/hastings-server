@@ -25,7 +25,7 @@ RSpec.describe Task, type: :model, focus: true do
         it "returns a nil runtime" do
           task = create(:task)
           task.instances.create(attributes_for(:instance, finished_at: nil))
-          expect(task.runtime).to eq [nil, nil]
+          expect(task.stats.runtime.sample).to be_empty
         end
       end
 
@@ -34,7 +34,7 @@ RSpec.describe Task, type: :model, focus: true do
           task = create(:task)
           task.instances.create(attributes_for(:instance))
           duration = task.instances.last.duration
-          expect(task.runtime).to eq [duration, 0.0]
+          expect(task.stats.runtime.sample).to eq [duration]
         end
       end
     end

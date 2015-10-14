@@ -6,7 +6,7 @@ FactoryGirl.define do
     interval { rand(1..60) }
     scalar   { %w(minutes hours days).sample }
     run_at   { (Time.now + rand(1..60)).strftime("%H:%M") }
-    script   { fixture_file_upload(Rails.root.join("spec", "support", "test_script.sh")) }
+    script   { fixture_file_upload(Rails.root.join("spec", "support", "test_script.sh").to_s) }
 
     after :create do |task, e|
       task.update_column :script, "test_script.sh"

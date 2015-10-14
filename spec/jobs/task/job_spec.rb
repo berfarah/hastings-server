@@ -1,5 +1,5 @@
 describe Task::Job do
-  subject { described_class.new task: task, script: task.script, queue: "task-queue" }
+  subject { described_class.new task: task, script: task.script.path, queue: "task-queue" }
   let(:task) { create(:task) }
   let(:job)  { Struct.new(:id).new(1) }
 
@@ -27,10 +27,6 @@ describe Task::Job do
 
     describe "#perform" do
       it "creates database entries STDOUT" do
-        # HACK: This is a hot-fix because Log's parent doesn't persist long enough
-        # to index and this will fail otherwise
-        allow_any_instance_of(Log).to receive(:from).and_return("Hi")
-
         logs = task.instances.last.logs
 
         expect(logs.count).to be 0

@@ -1,9 +1,9 @@
-describe RecurringJob do
+describe RecurringJobConcern do
   # Need to name our subject since RecurringJob relies on class names for
   # serialization
   before do
-    class ExampleJob; include ::RecurringJob; def perform; end end
-    class OtherJob; include ::RecurringJob; def perform; end end
+    class ExampleJob; include RecurringJobConcern; def perform; end end
+    class OtherJob; include RecurringJobConcern; def perform; end end
   end
 
   after do
