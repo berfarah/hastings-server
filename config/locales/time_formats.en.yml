@@ -3,3 +3,4 @@ en:
     formats:
       default: '%Y-%m-%d %H:%M:%S'
       human: '%H:%M:%S on %B %e, %Y'
+      scan: '%m/%d/%y - %l:%M%P'

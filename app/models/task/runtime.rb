@@ -3,7 +3,7 @@ class Task
     attr_reader :sample
 
     def initialize(task)
-      @sample = task.instances.last(2).map(&:duration).compact
+      @sample = task.instances.last(20).map(&:duration).compact
     end
 
     def average

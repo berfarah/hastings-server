@@ -24,8 +24,4 @@ h1.page-header
       = list_item "Average runtime", @task.runtime.average.human_time
       = list_item "Standard Deviation", "&plusmn; #{@task.runtime.standard_deviation.human_time}".html_safe
 
-  - @logs.group_by(&:instance).each do |header, logs|
-    - h = "Started: " << l(header.created_at.localtime, format: :human) << "<br>Finished: " << l(header.finished_at.localtime, format: :human) << "<br>Duration: #{header.duration.human_time}"
-    = logs_list(logs, header: h.html_safe)
-  .text-center = paginate @logs
-  / = logs_list(@task.instances.last.logs.reverse, header: true)
+  = render "logs_list"

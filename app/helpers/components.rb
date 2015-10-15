@@ -7,7 +7,8 @@ module Components
            locals: { title: title, text: text, body_size: body_size, header_size: header_size }
   end
 
-  def logs_list(logs, header: nil)
+  def logs_list(logs, header: nil, &block)
+    header = block_given? ? capture(&block) : header
     header = header == true ? "Logs" : header
     render partial: "logs/list", locals: { logs: logs, header: header }
   end
@@ -18,7 +19,7 @@ module Components
   end
 
   def glyphicon(icon)
-    "<span class='glyphicon glyphicon-#{icon}' style='margin: 2px 5px 0'></span>".html_safe
+    content_tag :span, nil, class: "glyphicon glyphicon-#{icon}", style: "margin: 2px 5px 0"
   end
 
   private
