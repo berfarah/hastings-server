@@ -1,13 +1,9 @@
 # Controller
 class TasksController < ApplicationController
   include ActionController::Live
-  before_action :set_task, only: [:edit, :update, :destroy, :toggle]
-  before_action :set_task_with_instances, only: [:show, :run_now]
 
-  # GET /tasks
-  # GET /tasks.json
   def index
-    @tasks = Task.order('LOWER(name) asc').page(params[:page]).per(12).includes(:instances)
+    @tasks = Task.order("LOWER(name) ASC").includes(:instances).page(params[:page]).per(12)
   end
 
   def search
@@ -30,21 +26,20 @@ class TasksController < ApplicationController
     response.stream.close
   end
 
-  # GET /tasks/1
-  # GET /tasks/1.json
   def show
-    @logs = Log.includes(:instance)
+    @task = Task.includes(:instances).find(params[:id])
+    @logs = Log.order(created_at: :desc)
+               .includes(:instance)
                .where(instances: { task_id: params[:id] })
                .page(params[:page]).per(20)
-    # @grouped_logs = @logs.group_by { |l| l.instance.created_at.to_date }
   end
 
-  # GET /tasks/new
   def new
     @task = Task.new
   end
 
   def toggle
+    @task = find_task
     @task.enabled = !@task.enabled
     on = @task.enabled ? "enabled" : "disabled"
     @task.save
@@ -55,6 +50,7 @@ class TasksController < ApplicationController
   end
 
   def run_now
+    @task = find_task
     on = TaskDispatcher.new(@task).run_now ? "running now" : "already running"
     respond_to do |format|
       format.html { redirect_to :back, notice: "#{@task.name} is #{on}" }
@@ -64,6 +60,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/1/edit
   def edit
+    @task = find_task
   end
 
   # POST /tasks
@@ -73,7 +70,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
-        format.html { redirect_to @task, notice: 'Task was successfully created.' }
+        format.html { redirect_to @task, notice: "Task was successfully created." }
         format.json { render :show, status: :created, location: @task }
       else
         flash[:error] = @task.errors.full_messages.to_sentence
@@ -86,9 +83,10 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
   def update
+    @task = find_task
     respond_to do |format|
       if @task.update(task_params)
-        format.html { redirect_to @task, notice: 'Task was successfully updated.' }
+        format.html { redirect_to @task, notice: "Task was successfully updated." }
         format.json { render :show, status: :ok, location: @task }
       else
         flash[:error] = @task.errors.full_messages.to_sentence
@@ -101,26 +99,22 @@ class TasksController < ApplicationController
   # DELETE /tasks/1
   # DELETE /tasks/1.json
   def destroy
-    @task.destroy
+    find_task.destroy
     respond_to do |format|
       format.html { redirect_to tasks_url, notice: 'Task was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
-  def instances
-    @task = Task.find(params[:task_id])
-  end
-
   private
 
     # Use callbacks to share common setup or constraints between actions.
-    def set_task
-      @task = Task.find(params[:id])
+    def find_task
+      Task.find(params[:id])
     end
 
-    def set_task_with_instances
-      @task = Task.includes(:instances).find(params[:id])
+    def find_task_with_instances
+      Task.includes(:instances).find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
