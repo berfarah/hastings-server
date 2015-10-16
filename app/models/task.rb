@@ -37,10 +37,6 @@ class Task < ActiveRecord::Base
     @stats ||= Statistics.new(self)
   end
 
-  def last_run
-    @last_run ||= instances.last.try(:started_at)
-  end
-
   def to_param
     @to_param ||= "#{id} #{name}".parameterize.freeze
   end

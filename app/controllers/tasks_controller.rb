@@ -58,13 +58,10 @@ class TasksController < ApplicationController
     end
   end
 
-  # GET /tasks/1/edit
   def edit
     @task = find_task
   end
 
-  # POST /tasks
-  # POST /tasks.json
   def create
     @task = Task.new(task_params)
 
@@ -80,8 +77,6 @@ class TasksController < ApplicationController
     end
   end
 
-  # PATCH/PUT /tasks/1
-  # PATCH/PUT /tasks/1.json
   def update
     @task = find_task
     respond_to do |format|
@@ -96,10 +91,9 @@ class TasksController < ApplicationController
     end
   end
 
-  # DELETE /tasks/1
-  # DELETE /tasks/1.json
   def destroy
-    find_task.destroy
+    @task = find_task
+    @task.destroy
     respond_to do |format|
       format.html { redirect_to tasks_url, notice: 'Task was successfully destroyed.' }
       format.json { head :no_content }
@@ -111,10 +105,6 @@ class TasksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def find_task
       Task.find(params[:id])
-    end
-
-    def find_task_with_instances
-      Task.includes(:instances).find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

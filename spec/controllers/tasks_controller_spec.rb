@@ -23,11 +23,16 @@ RSpec.describe TasksController, type: :controller do
   # Task. As you add validations to Task, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    attributes_for(:task)
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+      name: "Broken name",
+      run_at: "123456",
+      scalar: "years",
+      interval: nil
+    }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -101,15 +106,12 @@ RSpec.describe TasksController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
       it "updates the requested task" do
         task = Task.create! valid_attributes
-        put :update, {:id => task.to_param, :task => new_attributes}, valid_session
+        new_attr = attributes_for(:task)
+        put :update, {:id => task.to_param, :task => new_attr}, valid_session
         task.reload
-        skip("Add assertions for updated state")
+        expect(task.name).to eq(new_attr[:name])
       end
 
       it "assigns the requested task as @task" do

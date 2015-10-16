@@ -20,7 +20,7 @@ h1.page-header
                   " #{ra = @task.run_at; ra && " starting at #{ra}"}"
       = list_item "Script", link_to(@task.script, @task.script.to_s, target: "_blank")
     .col-md-6: .panel: .list-group
-      = list_item "Last run", about_time(@task.last_run.localtime)
+      = list_item "Last run", about_time(@task.stats.last_run.localtime)
       = list_item "Average runtime", @task.runtime.average.human_time
       = list_item "Standard Deviation", "&plusmn; #{@task.runtime.standard_deviation.human_time}".html_safe
 
