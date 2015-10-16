@@ -38,6 +38,7 @@ end
 
 # Development & Testing
 group :development do
+  gem "puma"
   gem "spring"
   gem "better_errors" # Much more useful errors page
   gem "meta_request"  # Use with https://github.com/dejan/rails_panel
