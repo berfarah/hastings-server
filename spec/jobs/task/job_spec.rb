@@ -24,8 +24,10 @@ describe Task::Job do
   # Using before
   describe "after #before" do
     before { subject.before(job) }
+    after  { Log.destroy_all }
 
     describe "#perform" do
+      # FIX: For some reason the logs here are persisting
       it "creates database entries STDOUT" do
         logs = task.instances.last.logs
 
@@ -34,9 +36,11 @@ describe Task::Job do
         subject.perform
         expect(logs.count).to be 2
 
+        info_id = logs.first.id
         expect(logs.first.severity).to eq "info"
         expect(logs.first.message).to eq "Hello world"
 
+        err_id = logs.last.id
         expect(logs.last.severity).to eq "error"
         expect(logs.last.message).to eq "Error happening"
       end

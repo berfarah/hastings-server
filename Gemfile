@@ -64,6 +64,7 @@ group :test do
   gem "spring-commands-rspec"
   gem "rubocop" # Linting according to ruby style guide
   gem "shoulda-matchers" # Easy testing for common rails functionality
-  gem 'stackprof'
-  gem 'simplecov', require: false
+  gem "stackprof"
+  gem "simplecov", require: false
+  gem "database_cleaner"
 end

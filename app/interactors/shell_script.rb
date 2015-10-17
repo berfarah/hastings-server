@@ -25,6 +25,7 @@ class ShellScript
               block.call nil, line, thread
             end
           end
+          ActiveRecord::Base.connection.close
         end.join
       end
 

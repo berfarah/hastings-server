@@ -15,6 +15,7 @@ describe TaskDispatcher do
 
   describe "#running?" do
     before { create(:instance, job_id: running, task: task) }
+    after  { task.destroy! }
     subject { super().running? }
     context "when the last job is running" do
       let(:running) { 1 }
@@ -29,6 +30,7 @@ describe TaskDispatcher do
 
   describe "#failed?" do
     before { create(:instance, failed: failed, task: task) }
+    after  { task.destroy! }
     subject { super().failed? }
     context "when the last job is running" do
       let(:failed) { true }

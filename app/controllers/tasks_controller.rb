@@ -28,10 +28,7 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.includes(:instances).find(params[:id])
-    @logs = Log.order(created_at: :desc)
-               .includes(:instance)
-               .where(instances: { task_id: params[:id] })
-               .page(params[:page]).per(20)
+    @logs = Log.by_task(params[:id]).page(params[:page]).per(20)
   end
 
   def new
@@ -41,21 +38,17 @@ class TasksController < ApplicationController
   def toggle
     @task = find_task
     @task.enabled = !@task.enabled
+    # TODO: Separate this into decorator
     on = @task.enabled ? "enabled" : "disabled"
     @task.save
-    respond_to do |format|
-      format.html { redirect_to :back, notice: "#{@task.name} has been #{on}" }
-      format.json { head :no_content }
-    end
+    redirect_to :back, notice: "#{@task.name} has been #{on}"
   end
 
   def run_now
     @task = find_task
+    # TODO: Separate this into decorator
     on = TaskDispatcher.new(@task).run_now ? "running now" : "already running"
-    respond_to do |format|
-      format.html { redirect_to :back, notice: "#{@task.name} is #{on}" }
-      format.json { head :no_content }
-    end
+    redirect_to :back, notice: "#{@task.name} is #{on}"
   end
 
   def edit
@@ -64,55 +57,39 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-
-    respond_to do |format|
-      if @task.save
-        format.html { redirect_to @task, notice: "Task was successfully created." }
-        format.json { render :show, status: :created, location: @task }
-      else
-        flash[:error] = @task.errors.full_messages.to_sentence
-        format.html { render :new }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+    if @task.save
+      redirect_to @task, notice: "Task was successfully created."
+    else
+      flash[:error] = @task.errors.full_messages.to_sentence
+      render :new
     end
   end
 
   def update
     @task = find_task
-    respond_to do |format|
-      if @task.update(task_params)
-        format.html { redirect_to @task, notice: "Task was successfully updated." }
-        format.json { render :show, status: :ok, location: @task }
-      else
-        flash[:error] = @task.errors.full_messages.to_sentence
-        format.html { render :edit }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+    if @task.update(task_params)
+      redirect_to @task, notice: "Task was successfully updated."
+    else
+      flash[:error] = @task.errors.full_messages.to_sentence
+      render :edit
     end
   end
 
   def destroy
     @task = find_task
     @task.destroy
-    respond_to do |format|
-      format.html { redirect_to tasks_url, notice: 'Task was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to tasks_url, notice: "Task was successfully destroyed."
   end
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
+    # Use this method to get the task
     def find_task
       Task.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:name, :script, :external, :ip, :scalar, :interval, :run_at, :enabled)
-    end
-
-    def not_authenticated
-      render json: 'Not an authenticated IP address'.to_json, status: :forbidden
+      params.require(:task).permit(:name, :script, :external, :ip, :scalar,
+                                   :interval, :run_at, :enabled)
     end
 end

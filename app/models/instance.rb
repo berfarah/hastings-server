@@ -32,6 +32,6 @@ class Instance < ActiveRecord::Base
     end
 
     def set_task_name
-      write_attribute(:name, task.name) unless name
+      write_attribute(:name, task.name) if task && !name
     end
 end

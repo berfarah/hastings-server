@@ -1,5 +1,9 @@
 RSpec.shared_examples "loggable" do |model|
   subject { model }
+  after(:all) do
+    model.destroy
+    model.try(:task).try(:destroy)
+  end
   it { is_expected.to respond_to :logs }
 
   describe "#logs" do

@@ -8,7 +8,7 @@ class LogsController < ApplicationController
     @logs = Log.order(created_at: :desc)
                .page(params[:page]).per(20)
                .includes(:loggable)
-    @grouped_logs = @logs.group_by { |l| l.loggable.name }
+    @grouped_logs = @logs.group_by { |l| l.loggable.try(:name) }
   end
 
   def search

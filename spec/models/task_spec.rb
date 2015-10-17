@@ -15,8 +15,8 @@ RSpec.describe Task, type: :model, focus: true do
   end
 
   it "validates that run_at can be parsed as a time" do
-    expect(build(:task, run_at: Time.now.strftime("%H:%M"))).to be_valid
-    expect(build(:task, run_at: Time.now.strftime("%H:%M:%S"))).to be_valid
+    expect(build(:task, run_at: Time.zone.now.strftime("%H:%M"))).to be_valid
+    expect(build(:task, run_at: Time.zone.now.strftime("%H:%M:%S"))).to be_valid
   end
 
   describe "#runtime" do
