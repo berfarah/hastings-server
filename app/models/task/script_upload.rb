@@ -1,4 +1,4 @@
-class Task
+class Task < ActiveRecord::Base
   # Module that contains all the logic pertaining to the script
   module ScriptUpload
     extend ActiveSupport::Concern

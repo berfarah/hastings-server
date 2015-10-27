@@ -6,11 +6,9 @@ source "https://rubygems.org"
 gem "rails", "~> 4.2.1"
 
 gem "bootstrap-sass"
-gem "data-confirm-modal", github: "ifad/data-confirm-modal"
+gem "data-confirm-modal", git: "https://github.com/ifad/data-confirm-modal.git"
 gem "slim"
-# gem "sass-rails", "~> 5.0"
-# Sass-C should compile faster
-gem "sassc-rails"
+gem "sass-rails", "~> 5.0"
 gem "uglifier", ">= 1.3.0"
 gem "jquery-rails"
 gem "redis"

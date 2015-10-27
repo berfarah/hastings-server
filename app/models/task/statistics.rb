@@ -1,4 +1,4 @@
-class Task
+class Task < ActiveRecord::Base
   class Statistics
     attr_reader :task
 

@@ -1,4 +1,4 @@
-class Task
+class Task < ActiveRecord::Base
   class Job
     def initialize(options = {})
       @task    = options.delete(:task).id

@@ -1,4 +1,4 @@
-class Task
+class Task < ActiveRecord::Base
   class NowJob < Job
     def before(job)
       super

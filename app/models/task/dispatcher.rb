@@ -1,4 +1,4 @@
-class Task
+class Task < ActiveRecord::Base
   module Dispatcher
     extend ActiveSupport::Concern
 

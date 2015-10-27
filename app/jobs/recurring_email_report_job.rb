@@ -1,6 +1,6 @@
 # Recurring Emails
 class RecurringEmailReportJob
-  include RecurringJob
+  include RecurringJobConcern
 
   def initialize(options = {})
     @recipients = options.delete(:recipients)
