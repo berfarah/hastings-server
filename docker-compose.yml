@@ -1,0 +1,17 @@
+web:
+  build: .
+  environment:
+    PORT: 80
+    DATABASE_PASSWORD: asdf123
+  expose:
+  - 80
+  ports:
+  - "80:80"
+  command: foreman start -c all=1,worker=8
+  links:
+  - db
+db:
+  image: postgres
+  environment:
+    POSTGRES_USER: hastings
+    POSTGRES_PASSWORD: asdf123

@@ -12,6 +12,9 @@ gem "sass-rails", "~> 5.0"
 gem "uglifier", ">= 1.3.0"
 gem "jquery-rails"
 gem "redis"
+gem "foreman"
+
+gem "passenger"
 
 # ?
 gem "jbuilder", "~> 2.0"
@@ -30,9 +33,7 @@ gem "kaminari"
 gem "elasticsearch-model"
 gem "elasticsearch-rails"
 
-group :production do
-  gem "pg"
-end
+gem "pg"
 
 # Development & Testing
 group :development do
@@ -47,7 +48,6 @@ end
 
 
 group :development, :test do
-  gem "sqlite3"
   gem "byebug" # Call "byebug" anywhere in the code to stop execution and get a debugger console
   gem "database_cleaner" # Strategies for cleaning/maintaining clean database
   gem "factory_girl_rails" # A library for setting up Ruby objects as test data

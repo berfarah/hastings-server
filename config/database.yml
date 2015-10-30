@@ -80,7 +80,7 @@ test:
 #
 production:
   <<: *pg
-  host: postgresql
+  host: <%= ENV['DATABASE_HOST']  %>
   database: hastings
   username: hastings
   password: <%= ENV['DATABASE_PASSWORD'] %>
