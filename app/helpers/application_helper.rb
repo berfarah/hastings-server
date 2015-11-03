@@ -10,12 +10,14 @@ module ApplicationHelper
   end
 
   def search
-    controller = params[:controller] == "instances" ? "tasks" : params[:controller]
-    form_for controller, url: { controller: controller, action: "search", id: params[:id] }, html: { method: :get, role: "search", class: "navbar-form navbar-left navbar-search" } do
-      content_tag :div, "Hello"
+    form_for :logs, url: { controller: :logs, action: "search" }, html: { method: :get, role: "search", class: "navbar-form navbar-left navbar-search" } do
       content_tag :div, class: "form-group" do
-        concat text_field_tag "query", params[:query], size: 50, placeholder: "Search", class: "form-control"
-          concat content_tag :i, nil, class: "glyphicon glyphicon-search"
+        concat text_field_tag :query, params[:query], size: 50, placeholder: "Search#{" "+search_name unless search_name.blank?} logs", class: "form-control"
+        concat hidden_field_tag :name, search_name unless search_name.blank?
+        concat hidden_field_tag :searching, searching
+        concat hidden_field_tag :from, params[:from] unless params[:from].blank?
+        concat hidden_field_tag :to, params[:to] unless params[:to].blank?
+        concat content_tag :i, nil, class: "glyphicon glyphicon-search"
       end
     end
   end
@@ -36,6 +38,18 @@ module ApplicationHelper
   end
 
   private
+
+    def search_name
+      params[:name] || params[:action] == "show" && class_for_search_name
+    end
+
+    def class_for_search_name
+      @class_for_search_name ||= params[:controller].classify.constantize.find(params[:id]).name
+    end
+
+    def searching
+      params[:searching] || params[:controller]
+    end
 
     def flash_to_bootstrap
       { 'notice' => 'info',

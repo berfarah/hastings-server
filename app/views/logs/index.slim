@@ -1,7 +1,10 @@
 h1.page-header
   ' Logs
-  = of_instance
+  = of_name
+  .pull-right style="font-size: 13px" = date_range
 
+- if @grouped_logs.empty?
+  p.lead Sorry, no results found
 - @grouped_logs.each do |name, logs|
   = logs_list(logs, header: name)
 

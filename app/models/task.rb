@@ -12,7 +12,7 @@ class Task < ActiveRecord::Base
   # !group Relationships
   has_many :instances, dependent: :destroy
   has_many :last_instance, -> { reverse_order.limit(1) },
-                              class_name: "Instance"
+           class_name: "Instance"
   # !endgroup
 
   # !group Validations
@@ -40,11 +40,11 @@ class Task < ActiveRecord::Base
     @to_param ||= "#{id} #{name}".parameterize.freeze
   end
 
-  protected
+  # protected
 
-    # def publish_to_redis
-    #   Redis.new.publish("tasks.touch", to_json)
-    # end
+  # def publish_to_redis
+  #   Redis.new.publish("tasks.touch", to_json)
+  # end
 
   private
 

@@ -12,7 +12,7 @@
       tbody
         - logs.each do |log|
           tr class=severity_class(log.severity)
-            td = l(log.created_at, format: :scan)
+            td = l(log.at, format: :scan)
             td = log.severity.upcase
             td = log.message
   
