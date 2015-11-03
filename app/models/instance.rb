@@ -1,7 +1,6 @@
 require "ext/parse_time"
 
 class Instance < ActiveRecord::Base
-  include Searchable
   include Loggable
 
   # I really want to do this to solve the N*2 problem with logs#index, but if
@@ -27,7 +26,7 @@ class Instance < ActiveRecord::Base
   protected
 
     def not_negative_duration
-      errors.add(:finished_at, 'is before started_at') if duration &&
+      errors.add(:finished_at, "is before started_at") if duration &&
                                                           duration < 0
     end
 

@@ -121,8 +121,9 @@ RSpec.describe TasksController, type: :controller do
       end
 
       it "redirects to the task" do
-        task = Task.create! valid_attributes
-        put :update, {:id => task.to_param, :task => valid_attributes}, valid_session
+        attrs = attributes_for(:task)
+        task = Task.create! attrs
+        put :update, {:id => task.to_param, :task => attrs}, valid_session
         expect(response).to redirect_to(task)
       end
     end

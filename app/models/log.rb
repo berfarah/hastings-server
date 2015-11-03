@@ -1,7 +1,5 @@
-require "elasticsearch/model"
-
 class Log < ActiveRecord::Base
-  include Searchable
+  update_index 'logs#log', :self
 
   belongs_to :loggable, polymorphic: true, touch: true
   belongs_to :instance, foreign_key: "loggable_id", foreign_type: "Instance"
@@ -24,7 +22,8 @@ class Log < ActiveRecord::Base
     where(created_at: from.beginning_of_day..to.end_of_day)
   }
 
-  def as_indexed_json(options = {})
-    as_json methods: [:severity, :message, :from]
+  delegate :name, to: :loggable
+  def at
+    created_at
   end
 end

@@ -37,10 +37,10 @@ RSpec.describe Log, type: :model do
     end
 
     describe ".by_task" do
-      let(:task) { create(:task_with_instances) }
-      after { task.destroy! }
-      subject { described_class.by_task(task.id) }
-      it { is_expected.to include(task.instances.first.logs.first) }
+      before { @task = create(:task_with_instances) }
+      after { @task.destroy! }
+      subject { described_class.by_task(@task.id) }
+      it { is_expected.to include(@task.instances.first.logs.first) }
       it { is_expected.not_to include(@yesterday) }
     end
   end

@@ -7,6 +7,7 @@ RSpec.describe Task, type: :model, focus: true do
 
   # Validations
   it { is_expected.to validate_presence_of :name }
+  it { is_expected.to validate_uniqueness_of :name }
   it { is_expected.to validate_numericality_of :interval }
 
   it "accepts #{described_class::SCALAR.to_sentence} for the scalar" do

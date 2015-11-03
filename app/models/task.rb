@@ -1,7 +1,6 @@
 require "ext/standard_deviation"
 
 class Task < ActiveRecord::Base
-  include Searchable
   include ScriptUpload
   include Dispatcher
 
@@ -17,7 +16,7 @@ class Task < ActiveRecord::Base
   # !endgroup
 
   # !group Validations
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
   validates :interval, numericality: true, presence: true
   validates :scalar, inclusion: { in: SCALAR }, presence: true
   validate :run_at_validation
@@ -40,23 +39,6 @@ class Task < ActiveRecord::Base
   def to_param
     @to_param ||= "#{id} #{name}".parameterize.freeze
   end
-
-  # def as_indexed_json(_options = {})
-  #   as_json methods: [:name, :last_run, :run_every, :script]
-  # end
-
-  # def as_json(_options = {})
-  #   {
-  #     id: id,
-  #     name: name,
-  #     script: { url: script.url },
-  #     interval: interval,
-  #     scalar: scalar,
-  #     enabled: enabled,
-  #     running: running?,
-  #     failed: failed?
-  #   }
-  # end
 
   protected
 
