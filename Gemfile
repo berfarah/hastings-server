@@ -28,10 +28,11 @@ gem "delayed_job_recurring"
 gem "turbolinks"
 gem "jquery-turbolinks"
 
+gem "active_data"
+
 gem "kaminari"
 
-gem "elasticsearch-model"
-gem "elasticsearch-rails"
+gem "chewy"
 
 gem "pg"
 

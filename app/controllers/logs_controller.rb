@@ -12,7 +12,8 @@ class LogsController < ApplicationController
   end
 
   def search
-    @logs = Log.search(params[:query]).page(params[:page]).per(50)
+    @logs = LogsSearch.new(query: params[:query], name: params[:name], from: params[:from], to: params[:to]).search.page(params[:page]).per(50)
+    @grouped_logs = @logs.group_by { |l| l.loggable.try(:name) }
     render :index
   end
 
