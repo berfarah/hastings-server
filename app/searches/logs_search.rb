@@ -32,7 +32,7 @@ class LogsSearch
   end
 
   def name_filter
-    index.filter(term: { name: name }) if name?
+    index.query(match_phrase: { name: name }) if name?
   end
 
   def severity_filter
