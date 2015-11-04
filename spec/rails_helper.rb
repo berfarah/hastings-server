@@ -1,25 +1,13 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../../config/environment', __FILE__)
+ENV["RAILS_ENV"] ||= "test"
+require File.expand_path("../../config/environment", __FILE__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
-require 'rspec/rails'
-require 'simplecov'
+require "rspec/rails"
+require "simplecov"
 require "shoulda/matchers"
-SimpleCov.start 'rails'
+SimpleCov.start "rails"
 # Add additional requires below this line. Rails is not loaded until this point!
-
-# Force shared connections between threads - really, really import to keeping
-# the database clean
-class ActiveRecord::Base
-  mattr_accessor :shared_connection
-  @@shared_connection = nil
-
-  def self.connection
-    @@shared_connection || retrieve_connection
-  end
-end
-ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -34,7 +22,7 @@ ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
