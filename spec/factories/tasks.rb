@@ -2,13 +2,15 @@ include ActionDispatch::TestProcess
 
 FactoryGirl.define do
   factory :task do
-    name { Faker::Hacker.noun }
+    sequence(:name) { |n| "#{Faker::Hacker.noun}-#{n}" }
     interval { rand(1..60) }
     scalar   { %w(minutes hours days).sample }
-    run_at   { (Time.now + rand(1..60)).strftime("%H:%M") }
-    script   { fixture_file_upload(Rails.root.join("spec", "support", "test_script.sh").to_s) }
+    run_at   { (Time.zone.now + rand(1..60)).strftime("%H:%M") }
+    script do
+      fixture_file_upload(Rails.root.join("spec", "support", "test_script.sh").to_s)
+    end
 
-    after :create do |task, e|
+    after :create do |task, _e|
       task.update_column :script, "test_script.sh"
     end
 

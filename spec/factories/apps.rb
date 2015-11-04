@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :app do
-    name { Faker::Hacker.noun }
+    sequence(:name) { |n| "#{Faker::Hacker.noun}-#{n}" }
     ip { Faker::Internet.ip_v4_address }
 
     factory :app_with_logs do
