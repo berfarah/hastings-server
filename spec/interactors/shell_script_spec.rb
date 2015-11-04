@@ -12,7 +12,7 @@ describe ShellScript do
       expect(text[:err]).to eq("Bad\n")
     end
 
-    it "streams STDOUT and STDERR instantly" do
+    it "streams STDOUT and STDERR instantly", slow: true do
       text = {}
 
       described_class.run('echo "Hello world"; sleep .5') do |out|
