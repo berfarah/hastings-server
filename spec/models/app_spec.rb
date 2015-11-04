@@ -9,5 +9,5 @@ RSpec.describe App, type: :model do
     expect(build(:app)).to be_valid
   end
 
-  it_behaves_like "loggable", FactoryGirl.create(:app)
+  it_behaves_like "loggable", :app
 end

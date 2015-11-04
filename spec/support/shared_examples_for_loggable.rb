@@ -1,18 +1,14 @@
 RSpec.shared_examples "loggable" do |model|
-  subject { model }
-  after(:all) do
-    model.destroy
-    model.try(:task).try(:destroy)
-  end
+  let(:m) { create(model) }
   it { is_expected.to respond_to :logs }
 
   describe "#logs" do
-    subject { super().logs }
+    subject { m.logs }
 
     describe "#create" do
-      it "creates a log associated to #{model.class}" do
+      it "creates a log associated to #{model}" do
         log = subject.create!(attributes_for(:log))
-        expect(log.loggable).to eq model
+        expect(log.loggable).to eq m
       end
     end
 
@@ -21,7 +17,7 @@ RSpec.shared_examples "loggable" do |model|
         subject.create!(attributes_for(:log))
         _other_instance_logs = create(:instance_with_logs)
 
-        expect(subject.all.map(&:loggable_id)).to all(be model.id)
+        expect(subject.all.map(&:loggable_id)).to all(be m.id)
       end
     end
   end

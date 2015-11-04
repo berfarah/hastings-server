@@ -33,5 +33,5 @@ RSpec.describe Instance, type: :model do
     end
   end
 
-  it_behaves_like "loggable", FactoryGirl.create(:instance)
+  it_behaves_like "loggable", :instance
 end

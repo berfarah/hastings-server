@@ -26,6 +26,10 @@ RSpec.describe TasksController, type: :controller do
     attributes_for(:task)
   }
 
+  let(:user) { create(:user) }
+  before { sign_in user }
+  after  { sign_out :user }
+
   let(:invalid_attributes) {
     {
       name: "Broken name",
@@ -42,7 +46,7 @@ RSpec.describe TasksController, type: :controller do
 
   describe "GET #index" do
     it "assigns all tasks as @tasks" do
-      task = Task.create! valid_attributes
+      task = create(:task)
       get :index, {}, valid_session
       expect(assigns(:tasks)).to eq([task])
     end
