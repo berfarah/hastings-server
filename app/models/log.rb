@@ -10,6 +10,11 @@ class Log < ActiveRecord::Base
   validates :severity, :message, presence: true
   validates_inclusion_of :severity, in: SEVERITY
 
+  scope :by_task, -> (task_id) {
+    order(created_at: :desc).includes(:instance)
+      .where(instances: { task_id: task_id })
+  }
+
   delegate :name, to: :loggable
   def at
     created_at
