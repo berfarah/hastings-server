@@ -3,6 +3,7 @@ require "ext/standard_deviation"
 class Task < ActiveRecord::Base
   include ScriptUpload
   include Dispatcher
+  include UserEditable
 
   # after_touch :publish_to_redis
   # after_save :publish_to_redis

@@ -10,11 +10,17 @@ html
       = search
       / form.navbar-form.navbar-left role="search" action=search_url
       /   .form-group: input type="text" class="form-control" placeholder="Search" size="50" name="search_query" value=params[:search_query]
-      ul.nav.navbar-nav.navbar-right
+      ul.nav.navbar-nav
         = nav_link_to 'Tasks', tasks_path, ['tasks', 'instances']
         = nav_link_to 'Apps', apps_path, 'apps'
         / li = nav_link_to 'Emails', emails_path, 'emails'
         = nav_link_to 'Logs', logs_path, 'logs'
+      
+      ul.nav.navbar-nav.navbar-right
+        - if user_signed_in?
+          = nav_link_to "#{glyphicon 'user'} #{current_user.username}", edit_user_registration_path(current_user), 'users'
+        - else
+          = nav_link_to "#{glyphicon 'user'} Log in", new_user_session_path, ''
 
   .container
     = flash_messages flash

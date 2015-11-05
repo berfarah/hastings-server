@@ -14,6 +14,8 @@ gem "jquery-rails"
 gem "redis"
 gem "foreman"
 
+gem "devise"
+
 gem "passenger"
 
 # ?
@@ -46,8 +48,6 @@ group :development do
   gem "bullet"
 end
 
-
-
 group :development, :test do
   gem "byebug" # Call "byebug" anywhere in the code to stop execution and get a debugger console
   gem "database_cleaner" # Strategies for cleaning/maintaining clean database
@@ -60,9 +60,10 @@ end
 
 group :test do
   gem "rspec-rails"
+  gem "capybara"
   gem "spring-commands-rspec"
   gem "rubocop" # Linting according to ruby style guide
-  gem "shoulda-matchers" # Easy testing for common rails functionality
+  gem "shoulda-matchers", require: false # Easy testing for common rails functionality
   gem "stackprof"
   gem "simplecov", require: false
   gem "database_cleaner"

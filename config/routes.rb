@@ -1,9 +1,10 @@
 Application.routes.draw do
+  root "tasks#index"
+
+  devise_for :users
+
   resources :logs, only: [:index] do
-    collection do
-      get "date/:date" => "logs#date", as: :date
-      get "search"
-    end
+    get "search", on: :collection
   end
 
   resources :apps do

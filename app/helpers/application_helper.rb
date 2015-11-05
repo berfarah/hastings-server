@@ -6,11 +6,11 @@ module ApplicationHelper
     active = ' class="active"' if [params[:action],
                                    params[:controller],
                                    params[:view]].any? { |x| controllers.include? x }
-    "<li#{active} title=\"#{text}\">#{link_to text, path}</li>".html_safe
+    "<li#{active}>#{link_to text.html_safe, path}</li>".html_safe
   end
 
   def search
-    form_for :logs, url: { controller: :logs, action: "search" }, html: { method: :get, role: "search", class: "navbar-form navbar-left navbar-search" } do
+    form_for :logs, url: { controller: "/logs", action: "search" }, html: { method: :get, role: "search", class: "navbar-form navbar-left navbar-search" } do
       content_tag :div, class: "form-group" do
         concat text_field_tag :query, params[:query], size: 50, placeholder: "Search#{" "+search_name unless search_name.blank?} logs", class: "form-control"
         concat hidden_field_tag :name, search_name unless search_name.blank?

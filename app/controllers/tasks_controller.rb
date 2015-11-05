@@ -1,30 +1,26 @@
-# Controller
 class TasksController < ApplicationController
-  include ActionController::Live
+  include UpdateTracking
 
   def index
     @tasks = Task.order("LOWER(name) ASC").includes(:instances).page(params[:page]).per(12)
   end
 
-  def search
-    @tasks = Task.search(params[:query]).records.includes(:instances).page(params[:page]).per(12)
-    render :index
-  end
-
-  def events
-    response.headers["Content-Type"] = "text/event-stream"
-    redis = Redis.new
-    redis.subscribe("tasks.touch") do |on|
-      on.message do |_event, data|
-        response.stream.write("data: #{data}\n\n")
-      end
-    end
-  rescue IOError
-    puts "Stream closed"
-  ensure
-    redis.quit
-    response.stream.close
-  end
+  # TODO: Implement streaming - relies on
+  # include ActionController::Live
+  # def events
+  #   response.headers["Content-Type"] = "text/event-stream"
+  #   redis = Redis.new
+  #   redis.subscribe("tasks.touch") do |on|
+  #     on.message do |_event, data|
+  #       response.stream.write("data: #{data}\n\n")
+  #     end
+  #   end
+  # rescue IOError
+  #   puts "Stream closed"
+  # ensure
+  #   redis.quit
+  #   response.stream.close
+  # end
 
   def show
     @task = Task.includes(:instances).find(params[:id])
@@ -57,6 +53,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task.user = current_user
     if @task.save
       redirect_to @task, notice: "Task was successfully created."
     else
@@ -68,6 +65,7 @@ class TasksController < ApplicationController
   def update
     @task = find_task
     if @task.update(task_params)
+      track_update(@task)
       redirect_to @task, notice: "Task was successfully updated."
     else
       flash[:error] = @task.errors.full_messages.to_sentence
