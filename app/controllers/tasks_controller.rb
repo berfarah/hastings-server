@@ -23,8 +23,10 @@ class TasksController < ApplicationController
   # end
 
   def show
-    @task = Task.includes(:instances).find(params[:id])
-    @logs = Log.by_task(params[:id]).page(params[:page]).per(20)
+    @task = TaskPresenter.new(
+      Task.includes(:instances).find(params[:id]),
+      Log.by_task(params[:id]).page(params[:page]).per(20)
+    )
   end
 
   def new
@@ -81,7 +83,6 @@ class TasksController < ApplicationController
 
   private
 
-    # Use this method to get the task
     def find_task
       Task.find(params[:id])
     end

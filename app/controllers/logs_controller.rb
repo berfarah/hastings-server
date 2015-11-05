@@ -2,29 +2,24 @@
 class LogsController < ApplicationController
   def index
     @logs =
-      Log.order(created_at: :desc)
-      .page(params[:page]).per(20)
-      .includes(:loggable)
-
-    @grouped_logs = grouped_logs
+      LogsPresenter.new(
+        Log.page(params[:page]).per(20)
+        .includes(:loggable)
+      )
   end
 
   def search
     @logs =
-      LogsSearch.new(
-        query: params[:query],
-        name: params[:name],
-        from: params[:from],
-        to: params[:to]
-      ).search.page(params[:page]).per(20)
-
-    @grouped_logs = grouped_logs
+      LogsPresenter.new(
+        LogsSearch.new(search_params).search
+        .page(params[:page]).per(20)
+      )
     render :index
   end
 
   private
 
-    def grouped_logs
-      @logs.group_by { |l| l.loggable.try(:name) }
+    def search_params
+      params.permit(:query, :name, :from, :to)
     end
 end

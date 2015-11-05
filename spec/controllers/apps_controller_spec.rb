@@ -8,6 +8,38 @@ RSpec.describe AppsController, type: :controller do
   let(:valid_attributes) { attributes_for(:app) }
   let(:invalid_attributes) { { name: "Broken name", ip: "not valid" } }
 
+  describe "GET #log" do
+    let(:app) { create(:app) }
+    let(:log) { { severity: "info", message: "Hello world" } }
+
+    context "with a valid IP" do
+      it "creates logs for given app" do
+        @request.env["REMOTE_ADDR"] = app.ip
+        expect do
+          post :log, { id: app.id, log: log }, valid_session
+        end.to change(app.logs, :count).by(1)
+      end
+
+      context "but invalid input" do
+        it "creates logs for given app" do
+          @request.env["REMOTE_ADDR"] = app.ip
+          expect do
+            post :log, { id: app.id, log: log.merge(severity: "invalid") }, valid_session
+          end.not_to change(app.logs, :count)
+        end
+      end
+    end
+
+    context "with an invalid IP" do
+      it "creates logs for given app" do
+        @request.env["REMOTE_ADDR"] = "0.0.0.0"
+        expect do
+          post :log, { id: app.id, log: log }, valid_session
+        end.not_to change(app.logs, :count)
+      end
+    end
+  end
+
   describe "GET #index" do
     it "assigns all apps as @apps" do
       app = create(:app)

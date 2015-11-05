@@ -1,6 +1,8 @@
 class Log < ActiveRecord::Base
   update_index 'logs#log', :self
 
+  default_scope { order(created_at: :desc) }
+
   belongs_to :loggable, polymorphic: true, touch: true
   belongs_to :instance, foreign_key: "loggable_id", foreign_type: "Instance"
   belongs_to :app, foreign_key: "loggable_id", foreign_type: "App"

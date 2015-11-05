@@ -36,13 +36,13 @@ describe Task::Job do
         subject.perform
         expect(logs.count).to be 2
 
-        info_id = logs.first.id
-        expect(logs.first.severity).to eq "info"
-        expect(logs.first.message).to eq "Hello world"
+        first = logs.unscoped.first
+        expect(first.severity).to eq "info"
+        expect(first.message).to eq "Hello world"
 
-        err_id = logs.last.id
-        expect(logs.last.severity).to eq "error"
-        expect(logs.last.message).to eq "Error happening"
+        last = logs.unscoped.last
+        expect(last.severity).to eq "error"
+        expect(last.message).to eq "Error happening"
       end
     end
 

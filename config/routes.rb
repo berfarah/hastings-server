@@ -8,16 +8,11 @@ Application.routes.draw do
   end
 
   resources :apps do
-    get "search", on: :collection
-    get "search_logs", on: :member
     post "log", on: :member
   end
 
   resources :tasks, path: "/" do
-    collection do
-      get "search"
-      get "events"
-    end
+    # get "events", on: :collection
 
     member do
       patch "toggle"

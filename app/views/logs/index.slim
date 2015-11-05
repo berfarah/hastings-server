@@ -3,9 +3,9 @@ h1.page-header
   = of_name
   .pull-right style="font-size: 13px" = date_range
 
-- if @grouped_logs.empty?
+- if @logs.empty?
   p.lead Sorry, no results found
-- @grouped_logs.each do |name, logs|
+- @logs.by_name.each do |name, logs|
   = logs_list(logs, header: name)
 
 .text-center = paginate @logs

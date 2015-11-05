@@ -1,8 +1,8 @@
-- @logs.group_by(&:instance).each do |header, logs|
+- @task.logs.by_instance.each do |header, logs|
   = logs_list(logs) do
     - if header.finished_at
       | Completed #{about_time(header.finished_at)}. Took #{header.duration.human_time}
     - else
       .text-color Currently Running
       
-.text-center = paginate @logs
+.text-center = paginate @task.logs

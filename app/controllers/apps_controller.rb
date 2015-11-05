@@ -3,7 +3,7 @@ class AppsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: :log
 
   def log
-    return not_authenticated unless (@app = app.find_by_ip(request.ip))
+    return not_authenticated unless (@app = App.find_by_ip(request.ip))
     log = @app.logs.new(params.require(:log).permit(:severity, :message))
     if log.save
       render json: log.to_json
