@@ -45,7 +45,7 @@ class AppsController < ApplicationController
       track_update(@app)
       redirect_to @app, notice: "App was successfully updated."
     else
-      flash[:error] = @app.errors.full_messages.to_gaasentence
+      flash[:error] = @app.errors.full_messages.to_sentence
       render :edit
     end
   end
