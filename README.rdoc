@@ -1,28 +1,23 @@
-== README
+## Hastings Server
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is an application that allows users to upload scripts and execute them periodically with email notifications.
 
-Things you may want to cover:
+The original idea was to create a DSL that significantly simplified programming to allow less technical, business users to create tasks that automate their workflows. You can see the beginnings of that concept [here](https://github.com/berfarah/hastings), but it quickly became overly complicated. Apparently it's really hard to make things really simple.
 
-* Ruby version
+The way script execution is handled by `hastings-server` is **VERY UNSAFE**.
 
-* System dependencies
+This is how I would implement the permission structure:
+* Create an account for rails
+* Create an account for delayed_job
+* Create an account for script execution that delayed_job has access to, sandboxed to a different home folder
 
-* Configuration
+### Development
 
-* Database creation
+Feel free to pull this server down and poke around:
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+```
+git clone git@github.com:berfarah/hastings-server.git
+cd hastings-server
+bin/install
+bin/rails s
+```
